@@ -161,6 +161,18 @@ class BottleTest(unittest.TestCase):
             ],
         ])
 
+    def test_turn_list_4(self):
+        bottles = list(map(string_to_bottle, [
+            "yyyy",
+            "bbbb",
+            "    ",
+        ]))
+
+        validate_bottles(bottles)
+        candidates = list(list_available_turns(bottles))
+        self.assertCountEqual(candidates, [])
+
+
     def test_solve_no_solution(self):
         bottles = list(map(string_to_bottle, [
             "bbrr",
