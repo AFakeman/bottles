@@ -39,16 +39,22 @@ def read_bottles_file(num_bottles, filename, reverse=False):
     if filename != '-':
         with open(filename) as f:
             for line in f:
-                bottles.append(string_to_bottle(line[:-1]))
+                if reverse:
+                    bottles.append(string_to_bottle(line[:-1][::-1]))
+                else:
+                    bottles.append(string_to_bottle(line[:-1]))
     else:
         for line in sys.stdin:
-            bottles.append(string_to_bottle(line[:-1]))
+            if reverse:
+                bottles.append(string_to_bottle(line[:-1][::-1]))
+            else:
+                bottles.append(string_to_bottle(line[:-1]))
 
     if len(bottles) > num_bottles:
         raise ValueError("Too many lines provided!")
 
     if len(bottles) < num_bottles:
-        bottles += [[] for i in range(num_bottles - len(bottles))]
+        bottles += [[' ' for j in range(4)] for i in range(num_bottles - len(bottles))]
 
     return bottles
 
@@ -165,6 +171,8 @@ if __name__ == '__main__':
     validate_bottles(bottles)
 
     if args.command == "solve":
-        pprint(solve(bottles))
+        solution = solve(bottles)
+        pprint(solution)
+        print(f"{len(solution)} turns")
     elif args.command == "list-moves":
         pprint(list(list_available_turns(bottles)))
