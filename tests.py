@@ -172,6 +172,29 @@ class BottleTest(unittest.TestCase):
         candidates = list(list_available_turns(bottles))
         self.assertCountEqual(candidates, [])
 
+    def test_turn_list_5(self):
+        bottles = list(map(string_to_bottle, [
+            "b   ",
+            "bbb ",
+            "    ",
+        ]))
+
+        validate_bottles(bottles)
+        candidates = list(list_available_turns(bottles))
+        pprint(candidates)
+        self.assertCountEqual(candidates, [
+            [
+                string_to_bottle('bbbb'),
+                string_to_bottle('    '),
+                string_to_bottle('    '),
+            ],
+            [
+                string_to_bottle('    '),
+                string_to_bottle('    '),
+                string_to_bottle('bbbb'),
+            ],
+        ])
+
 
     def test_solve_no_solution(self):
         bottles = list(map(string_to_bottle, [

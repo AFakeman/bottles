@@ -70,6 +70,14 @@ def is_full_bottle(bottle):
     return all(map(lambda x: x == bottle[0], bottle))
 
 
+def is_one_color_bottle(bottle):
+    return all(map(lambda x: x == bottle[0] or x == ' ', bottle))
+
+
+def is_empty_bottle(bottle):
+    return all(map(lambda x: x == ' ', bottle))
+
+
 def validate_bottles(bottles):
     colors = {}
     for bottle in bottles:
@@ -122,6 +130,8 @@ def list_available_turns(bottles):
         top_color = top_colors[source_idx]
         for dest_idx in bottle_candidates:
             if dest_idx == source_idx:
+                continue
+            if is_empty_bottle(bottles[dest_idx]) and is_one_color_bottle(source):
                 continue
             if (top_colors[dest_idx] != ' ' and top_colors[dest_idx] != top_color):
                 continue
